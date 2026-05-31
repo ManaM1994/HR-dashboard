@@ -2,15 +2,17 @@
 
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
 import { login } from "@/app/store/slices/authSlice";
 import { Button, Input, Card } from "@/app/components";
 import { loginSchema, LoginFormData } from "./validation";
 import { useState } from "react";
+import { RootState } from "../store/store";
 
 const LoginPage = () => {
   const [submitError, setSubmitError] = useState("");
+  const users = useSelector((state: RootState) => state.users.data);
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -18,17 +20,24 @@ const LoginPage = () => {
     control,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<LoginFormData>({
     resolver: yupResolver(loginSchema),
   });
 
   const onSubmit = (data: LoginFormData) => {
-    setSubmitError("");
-    try {
+    const user = users.find(
+      (u) =>
+        u.email.toLowerCase() === data.email.toLowerCase() &&
+        u.firstName.toLowerCase() === data.username.toLowerCase()
+    );
+    if (user) {
       dispatch(login({ username: data.username, email: data.email }));
+      setSubmitError("");
+      reset();
       router.push("/dashboard");
-    } catch {
-      setSubmitError("Login failed. Please try again.");
+    } else {
+      setSubmitError("Invalid Email or Username");
     }
   };
 
@@ -85,19 +94,7 @@ const LoginPage = () => {
               />
             )}
           />
-          <Controller
-            name="password"
-            control={control}
-            render={({ field }) => (
-              <Input
-                label="Password"
-                type="password"
-                placeholder="Enter your password"
-                {...field}
-                error={errors.password?.message}
-              />
-            )}
-          />
+
           {submitError && (
             <p
               style={{

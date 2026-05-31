@@ -1,17 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/app/store/store";
-import {
-  setUsers,
-  setLoading,
-  setError,
-  setSearchQuery,
-} from "@/app/store/slices/usersSlice";
+import { setSearchQuery } from "@/app/store/slices/usersSlice";
 import { Button } from "@/app/components";
 import ThemeToggle from "@/app/components/ThemeToggle/ThemeToggle";
-import { fetchUsers } from "./api";
 import UserTable from "./components/UserTable";
 import AnalyticsCards from "./components/AnalyticsCards";
 
@@ -23,25 +16,6 @@ const DashboardPage = () => {
     searchQuery,
     currentPage,
   } = useSelector((state: RootState) => state.users);
-
-  useEffect(() => {
-    const loadUsers = async () => {
-      dispatch(setLoading(true));
-      try {
-        const usersData = await fetchUsers();
-        dispatch(setUsers(usersData));
-        dispatch(setError(null));
-      } catch {
-        dispatch(setError("Failed to fetch users"));
-      } finally {
-        dispatch(setLoading(false));
-      }
-    };
-
-    if (users.length === 0) {
-      loadUsers();
-    }
-  }, [dispatch, users.length]);
 
   const handleSearch = (query: string) => {
     dispatch(setSearchQuery(query));

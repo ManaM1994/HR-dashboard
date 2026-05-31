@@ -51,6 +51,7 @@ const Input = ({ label, error, className = "", ...inputProps }: InputProps) => {
         disabled={inputProps.disabled}
         className={className}
         {...inputProps}
+        value={inputProps.value ?? ""}
       />
       {error && (
         <span

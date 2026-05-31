@@ -4,6 +4,8 @@ import React, { useEffect } from "react";
 import { Provider, useDispatch, useSelector } from "react-redux";
 import { store, RootState } from "./store/store";
 import { setTheme } from "./store/slices/themeSlice";
+import { setUsers, setLoading, setError } from "./store/slices/usersSlice";
+import { fetchUsers } from "./dashboard/api";
 
 function ThemeInitializer({ children }: { children: React.ReactNode }) {
   const dispatch = useDispatch();
@@ -12,6 +14,21 @@ function ThemeInitializer({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     const saved = localStorage.getItem("theme") as "light" | "dark" | null;
     if (saved) dispatch(setTheme(saved));
+  }, [dispatch]);
+
+  useEffect(() => {
+    const loadUsers = async () => {
+      dispatch(setLoading(true));
+      try {
+        const users = await fetchUsers();
+        dispatch(setUsers(users));
+      } catch {
+        dispatch(setError("Failed to load users"));
+      } finally {
+        dispatch(setLoading(false));
+      }
+    };
+    loadUsers();
   }, [dispatch]);
 
   useEffect(() => {
