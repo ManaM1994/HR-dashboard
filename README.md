@@ -1,36 +1,75 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# HR Dashboard 🚀
 
-## Getting Started
+A polished Human Resources dashboard built with modern React and Next.js technologies. This app lets HR teams securely log in, browse employee records, search and paginate through users, and explore live analytics for age distribution and top cities.
 
-First, run the development server:
+---
+
+## ✨ App Overview
+
+`HR Dashboard` is a responsive admin-style interface designed for employee data visibility.
+It includes a secure login flow, a searchable employee directory, pagination, theme switching, and interactive analytics charts.
+
+---
+
+## ✅ Key Features
+
+- **Secure login page** with validation using `react-hook-form` and `yup`
+- **User table** displaying employee details such as name, email, age, and role
+- **Live search** by name or email for fast filtering
+- **Pagination** with page controls for large user datasets
+- **Analytics cards** showing age distribution and top cities using `recharts`
+- **Dark / Light theme toggle** with persisted preference in `localStorage`
+- **Redux Toolkit state management** for auth, users, and theme state
+- **API integration** with `axios` to fetch user data from an external endpoint
+- **Modern styling** using Tailwind CSS and custom component design
+
+---
+
+## 🧰 Tech Stack
+
+- `Next.js` 16 (App Router)
+- `React` 19
+- `TypeScript`
+- `Redux Toolkit`
+- `react-hook-form`
+- `yup`
+- `axios`
+- `recharts`
+- `Tailwind CSS` v4
+
+---
+
+## 🚀 Getting Started
+
+Install dependencies:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Run the development server:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+pnpm dev
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Learn More
+---
 
-To learn more about Next.js, take a look at the following resources:
+## 📁 Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- `app/` - Next.js app directory
+- `app/login/` - login page and validation schema
+- `app/dashboard/` - dashboard page, user table, analytics components, API client
+- `app/store/` - Redux store and slices for auth, users, and theme
+- `app/components/` - shared UI components like buttons, cards, inputs, and theme toggle
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
+## 💡 Notes
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- The home route redirects automatically to the login page.
+- User authentication is validated against fetched employee data.
+- Theme preference is saved in browser storage for a consistent experience.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
